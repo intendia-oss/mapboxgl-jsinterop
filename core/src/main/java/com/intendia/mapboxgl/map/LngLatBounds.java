@@ -3,7 +3,7 @@ package com.intendia.mapboxgl.map;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
 
-@JsType(namespace = "mapboxgl", isNative = true)
+@JsType(isNative = true)
 public class LngLatBounds {
     public LngLatBounds(double[] westSouth, double[] EastNorth) {}
     public native double getWest();

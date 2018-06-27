@@ -7,7 +7,7 @@ import elemental2.dom.HTMLElement;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
 
-@JsType(namespace = "mapboxgl", isNative = true) public class Marker {
+@JsType(isNative = true) public class Marker {
     public Marker() {}
     public Marker(HTMLElement element) {}
     public Marker(HTMLElement element, MarkerOptions options) {}

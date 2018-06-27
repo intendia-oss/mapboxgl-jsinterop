@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 import jsinterop.annotations.JsFunction;
 import jsinterop.annotations.JsType;
 
-@JsType(namespace = "mapboxgl", isNative = true)
-public class Map {
+@JsType(isNative = true)
+public class Map implements Evented {
 
     public Map(MapOptions options) {}
 
@@ -16,9 +16,24 @@ public class Map {
 
     public native Map off(String type, Listener fn);
 
+    public native Map once(String type, Listener fn);
+
     public native Map on(String type, String layer, Listener fn);
 
     public native Map off(String type, String layer, Listener fn);
+
+    public native void addControl(Object control);
+
+    /**
+     * Adds a {@code IControl} to the map, calling {@code control.onAdd(this)}.
+     *
+     * @param control The IControl to add.
+     * @param position position on the map to which the control will be added. Valid values are 'top-left', 'top-right',
+     * 'bottom-left', and 'bottom-right'. Defaults to 'top-right'.
+     */
+    public native void addControl(Object control, String position);
+
+    public native void removeControl(Object control);
 
     public native Map resize();
 
