@@ -1,0 +1,10 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.2//EN" "http://gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+<module>
+    <inherits name="elemental2.dom.Dom"/>
+
+    <!-- I18N and Resources required by ClientBundle -->
+    <inherits name="com.google.gwt.i18n.I18N"/>
+    <inherits name="com.google.gwt.resources.Resources"/>
+
+    <source path='' excludes="**/*Test.java,**/*TestSuite.java,**/*TestUtil.java"/>
+</module>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.intendia.mapboxgl-jsinterop</groupId>
+        <artifactId>mapboxgl-jsinterop-parent</artifactId>
+        <version>HEAD-SNAPSHOT</version>
+    </parent>
+    <artifactId>mapboxgl-jsinterop-sample</artifactId>
+    <packaging>gwt-app</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.ltgt.gwt.maven</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <configuration>
+                    <moduleName>com.intendia.sample.Sample</moduleName>
+                    <skipModule>true</skipModule>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies><!--@formatter:off-->
+        <dependency><groupId>com.google.gwt</groupId><artifactId>gwt-user</artifactId></dependency>
+        <dependency><groupId>com.google.gwt</groupId><artifactId>gwt-dev</artifactId></dependency>
+        <dependency><groupId>com.intendia.mapboxgl-jsinterop</groupId><artifactId>mapboxgl-jsinterop</artifactId><type>gwt-lib</type><version>${project.version}</version></dependency>
+        <dependency><groupId>org.jboss.gwt.elemento</groupId><artifactId>elemento-core</artifactId><version>0.8.2-gwt2</version></dependency>
+        <!-- Test dependencies -->
+        <dependency><groupId>junit</groupId><artifactId>junit</artifactId></dependency>
+    </dependencies><!--@formatter:on-->
+</project>
