@@ -22,6 +22,31 @@ public class Map implements Evented {
 
     public native Map off(String type, String layer, Listener fn);
 
+    /** Adds a source to the map's style. */
+    public native Map addSource(String id, Object source);
+
+    /** Removes a source from the map's style. */
+    public native Map removeSource(String id);
+
+    /** Returns the source with the specified ID in the map's style. */
+    public native @Nullable Object getSource(String id);
+
+    /** Adds a Mapbox style layer to the map's style. */
+    public native Map addLayer(Object layer);
+    /** Adds a Mapbox style layer to the map's style. */
+    public native Map addLayer(Object layer, @Nullable String before);
+
+    /** Moves a layer to a different z-position. */
+    public native Map moveLayer(String id);
+    /** Moves a layer to a different z-position. */
+    public native Map moveLayer(String id, String beforeId);
+
+    /** Removes the layer with the given id from the map's style. */
+    public native Map removeLayer(String id);
+
+    /** Returns the layer with the specified ID in the map's style. */
+    public native Object getLayer(String id);
+
     public native void addControl(Object control);
 
     /**
@@ -57,7 +82,22 @@ public class Map implements Evented {
 
     public native Map flyTo(CameraOptions options, @Nullable Object eventData);
 
+    /**
+     * Returns the map's current bearing. The bearing is the compass direction that is "up"; for example, a bearing of
+     * 90° orients the map so that east is up.
+     */
+    public native double getBearing();
+    public native double setBearing(double bearing);
+
+    /** Returns the map's current pitch (tilt). */
+    public native double getPitch();
     public native Map setPitch(double pitch);
+
+    /** Returns a Boolean indicating whether the map is fully loaded. */
+    public native boolean loaded();
+
+    /** Clean up and release all internal resources associated with this map. */
+    public native void remove();
 
     public native HTMLElement getContainer();
 
@@ -99,6 +139,16 @@ public class Map implements Evented {
 
     @JsType(namespace = GLOBAL, name = "Object", isNative = true)
     public static class FitBoundsOptions {
+        /** The amount of padding in pixels to add to the given bounds. */
         public double padding;
+
+        /**
+         * If true, the map transitions using Map#easeTo. If false, the map transitions using Map#flyTo. See those
+         * functions and AnimationOptions for information about options available.
+         */
+        public boolean linear;
+
+        /** The maximum zoom level to allow when the map view transitions to the specified bounds. */
+        public double maxZoom;
     }
 }

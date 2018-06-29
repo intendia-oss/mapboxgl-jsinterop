@@ -4,11 +4,11 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import jsinterop.annotations.JsFunction;
 import jsinterop.base.Js;
 
-public class EventType<T> {
+public class MapEventType<T> {
 
     private final String name;
 
-    public EventType(String name) {
+    public MapEventType(String name) {
         this.name = name;
     }
 
@@ -16,7 +16,7 @@ public class EventType<T> {
         return name;
     }
 
-    public static <T> HandlerRegistration bind(Evented target, EventType<T> type, EventCallbackFn<T> listener) {
+    public static <T> HandlerRegistration bind(Evented target, MapEventType<T> type, EventCallbackFn<T> listener) {
         return bind(target, type.name, e -> listener.onEvent(Js.cast(e)));
     }
 
@@ -25,7 +25,7 @@ public class EventType<T> {
         return () -> target.off(type, fn);
     }
 
-    public static <T> HandlerRegistration bind(Map target, EventType<T> type, String layer, EventCallbackFn<T> fn) {
+    public static <T> HandlerRegistration bind(Map target, MapEventType<T> type, String layer, EventCallbackFn<T> fn) {
         return bind(target, type.name, layer, e -> fn.onEvent(Js.cast(e)));
     }
 

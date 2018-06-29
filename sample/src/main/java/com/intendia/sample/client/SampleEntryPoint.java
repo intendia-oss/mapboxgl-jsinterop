@@ -8,9 +8,9 @@ import com.google.gwt.resources.client.CssResource;
 import com.intendia.mapboxgl.draw.Draw;
 import com.intendia.mapboxgl.draw.Draw.DrawOptions;
 import com.intendia.mapboxgl.draw.DrawGlobal;
-import com.intendia.mapboxgl.map.EventType;
 import com.intendia.mapboxgl.map.Map;
 import com.intendia.mapboxgl.map.Map.MapOptions;
+import com.intendia.mapboxgl.map.MapEventType;
 import com.intendia.mapboxgl.map.MapGlobal;
 import elemental2.dom.DomGlobal;
 import elemental2.dom.HTMLElement;
@@ -42,12 +42,12 @@ public class SampleEntryPoint implements EntryPoint {
             Draw draw = new Draw(drawOptions);
             map.addControl(draw);
 
-            EventType.bind(map, MapGlobal.load, ev -> DomGlobal.console.log("load", ev));
-            EventType.bind(map, MapGlobal.zoom, ev -> DomGlobal.console.log("zoom", ev));
-            EventType.bind(map, DrawGlobal.modechange, ev -> DomGlobal.console.log("draw.modechange", ev));
-            EventType.bind(map, DrawGlobal.create, ev -> DomGlobal.console.log("draw.create", ev));
-            EventType.bind(map, DrawGlobal.update, ev -> DomGlobal.console.log("draw.update", ev));
-            EventType.bind(map, DrawGlobal.delete, ev -> DomGlobal.console.log("draw.delete", ev));
+            MapEventType.bind(map, MapGlobal.load, ev -> DomGlobal.console.log("load", ev));
+            MapEventType.bind(map, MapGlobal.zoom, ev -> DomGlobal.console.log("zoom", ev));
+            MapEventType.bind(map, DrawGlobal.modechange, ev -> DomGlobal.console.log("draw.modechange", ev));
+            MapEventType.bind(map, DrawGlobal.create, ev -> DomGlobal.console.log("draw.create", ev));
+            MapEventType.bind(map, DrawGlobal.update, ev -> DomGlobal.console.log("draw.update", ev));
+            MapEventType.bind(map, DrawGlobal.delete, ev -> DomGlobal.console.log("draw.delete", ev));
         });
     }
 

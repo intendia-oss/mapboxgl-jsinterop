@@ -14,6 +14,9 @@ public class LngLatBounds {
     public native LngLatBounds extend(LngLat lntLat);
     public native LngLatBounds extend(LngLatBounds bounds);
     public native double[] toArray();
+
+    public native static LngLatBounds convert(Object input);
+
     public final @JsOverlay boolean contains(LngLat ll) {
         return ll.lng <= getEast() && ll.lng >= getWest()
                 && ll.lat <= getNorth() && ll.lat >= getSouth();

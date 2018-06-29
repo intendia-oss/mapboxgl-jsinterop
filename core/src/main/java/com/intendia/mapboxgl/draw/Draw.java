@@ -4,10 +4,40 @@ import static jsinterop.annotations.JsPackage.GLOBAL;
 
 import javax.annotation.Nullable;
 import jsinterop.annotations.JsOverlay;
+import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
-@JsType(name = "MapboxDraw", isNative = true)
+@JsType(namespace = JsPackage.GLOBAL, name = "MapboxDraw", isNative = true)
 public class Draw {
+
+    /**
+     * (Draw.modes.SIMPLE_SELECT === 'simple_select') Lets you select, delete, and drag features.
+     *
+     * In this mode, features can have their selected state changed by the user.
+     *
+     * Draw is in simple_select mode by default, and will automatically transition into simple_select mode again every
+     * time the user finishes drawing a feature or exits direct_select mode.
+     */
+    public static final @JsOverlay String SIMPLE_SELECT = "simple_select";
+
+    /**
+     * (Draw.modes.DIRECT_SELECT === 'direct_select') Lets you select, delete, and drag vertices; and drag features.
+     *
+     * direct_select mode does not apply to point features, because they have no vertices.
+     *
+     * Draw enters direct_select mode when the user clicks a vertex of an selected line or polygon. So direct_select
+     * mode typically follows simple_select mode.
+     */
+    public static final @JsOverlay String DIRECT_SELECT = "direct_select";
+
+    /** (Draw.modes.DRAW_LINE_STRING === 'draw_line_string') Lets you draw a LineString feature. */
+    public static final @JsOverlay String DRAW_LINE_STRING = "draw_line_string";
+
+    /** (Draw.modes.DRAW_POLYGON === 'draw_polygon') Lets you draw a Polygon feature. */
+    public static final @JsOverlay String DRAW_POLYGON = "draw_polygon";
+
+    /** (Draw.modes.DRAW_POINT === 'draw_point') Lets you draw a Point feature. */
+    public static final @JsOverlay String DRAW_POINT = "draw_point";
 
     public Draw(DrawOptions options) {}
 
