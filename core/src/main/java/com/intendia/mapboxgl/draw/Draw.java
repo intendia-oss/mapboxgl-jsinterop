@@ -2,13 +2,16 @@ package com.intendia.mapboxgl.draw;
 
 import static jsinterop.annotations.JsPackage.GLOBAL;
 
+import com.intendia.mapboxgl.map.IControl;
+import com.intendia.mapboxgl.map.Map;
+import elemental2.dom.HTMLElement;
 import javax.annotation.Nullable;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
 @JsType(namespace = JsPackage.GLOBAL, name = "MapboxDraw", isNative = true)
-public class Draw {
+public class Draw implements IControl {
 
     /**
      * (Draw.modes.SIMPLE_SELECT === 'simple_select') Lets you select, delete, and drag features.
@@ -40,6 +43,12 @@ public class Draw {
     public static final @JsOverlay String DRAW_POINT = "draw_point";
 
     public Draw(DrawOptions options) {}
+
+    @Override public native String getDefaultPosition();
+
+    @Override public native HTMLElement onAdd(Map map);
+
+    @Override public native void onRemove(Map map);
 
     /**
      * add(geojson: Object) => Array<string>

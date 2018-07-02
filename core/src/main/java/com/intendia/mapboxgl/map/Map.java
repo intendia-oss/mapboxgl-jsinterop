@@ -5,10 +5,18 @@ import static jsinterop.annotations.JsPackage.GLOBAL;
 import elemental2.dom.HTMLElement;
 import javax.annotation.Nullable;
 import jsinterop.annotations.JsFunction;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true)
 public class Map implements Evented {
+
+    public static @JsProperty(namespace = "mapboxgl") String accessToken;
+
+    public static @JsProperty(namespace = "mapboxgl") String version;
+
+    public static @JsMethod(namespace = "mapboxgl") native boolean supported();
 
     public Map(MapOptions options) {}
 
@@ -47,7 +55,7 @@ public class Map implements Evented {
     /** Returns the layer with the specified ID in the map's style. */
     public native Object getLayer(String id);
 
-    public native void addControl(Object control);
+    public native void addControl(IControl control);
 
     /**
      * Adds a {@code IControl} to the map, calling {@code control.onAdd(this)}.
@@ -56,9 +64,39 @@ public class Map implements Evented {
      * @param position position on the map to which the control will be added. Valid values are 'top-left', 'top-right',
      * 'bottom-left', and 'bottom-right'. Defaults to 'top-right'.
      */
-    public native void addControl(Object control, String position);
+    public native void addControl(IControl control, String position);
 
-    public native void removeControl(Object control);
+    public native void removeControl(IControl control);
+
+    /** Returns the map's Mapbox style object, which can be used to recreate the map's style. */
+    public native Object getStyle();
+
+    public native Map setStyle(String styleUrl);
+    public native Map setStyle(Object styleSpec);
+    /**
+     * Updates the map's Mapbox style object with a new value. If the given value is style JSON object, compares it
+     * against the the map's current state and perform only the changes necessary to make the map style match the
+     * desired state.
+     */
+    public native Map setStyle(Object style, @Nullable StyleOptions options);
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class StyleOptions {
+        /**
+         * (default true) If false, force a 'full' update, removing the current style and adding building the given one
+         * instead of attempting a diff-based update.
+         */
+        public boolean diff;
+
+        /**
+         * (default null) If non-null, defines a css font-family for locally overriding generation of glyphs in the 'CJK
+         * Unified Ideographs' and 'Hangul Syllables' ranges. Forces a full update.
+         */
+        public String localIdeographFontFamily;
+    }
+
+    /** Returns a Boolean indicating whether the map's style is fully loaded. */
+    public native boolean isStyleLoaded();
 
     public native Map resize();
 
