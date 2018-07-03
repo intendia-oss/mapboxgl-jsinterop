@@ -6,6 +6,7 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
 import com.google.gwt.resources.client.TextResource;
 import elemental2.core.Global;
+import jsinterop.base.JsPropertyMap;
 
 public interface MapGlobal {
 
@@ -13,6 +14,26 @@ public interface MapGlobal {
         Resources resources = GWT.create(Resources.class);
         resources.style().ensureInjected();
         Global.eval(resources.script().getText());
+    }
+
+    static GeoJsonSourceBuilder sourceGeojson(String srcUrl) { return new GeoJsonSourceBuilder(srcUrl); }
+
+    static GeoJsonSourceBuilder sourceGeojson(Object geojson) { return new GeoJsonSourceBuilder(geojson); }
+
+    class DictionaryBuilder {
+        final JsPropertyMap<Object> out = JsPropertyMap.of();
+
+        public Object build() { return out; }
+    }
+
+    class GeoJsonSourceBuilder extends DictionaryBuilder {
+        private GeoJsonSourceBuilder(Object data) { out.set("type", "geojson"); out.set("data", data); }
+
+        public GeoJsonSourceBuilder cluster() { out.set("cluster", true); return this; }
+
+        public GeoJsonSourceBuilder clusterMaxZoom(int maxZoom) { out.set("clusterMaxZoom", maxZoom); return this; }
+
+        public GeoJsonSourceBuilder clusterRadius(int radius) { out.set("clusterRadius", radius); return this; }
     }
 
     interface Resources extends ClientBundle {
@@ -57,13 +78,44 @@ public interface MapGlobal {
     MapEventType<Event> boxzoomcancel = new MapEventType<>("boxzoomcancel");
     MapEventType<Event> webglcontextlost = new MapEventType<>("webglcontextlost");
     MapEventType<Event> webglcontextrestored = new MapEventType<>("webglcontextrestored");
+    /**
+     * Fired immediately after all necessary resources have been downloaded and the first visually complete rendering of
+     * the map has occurred.
+     */
     MapEventType<Event> load = new MapEventType<>("load");
     MapEventType<Event> render = new MapEventType<>("render");
+
+    /**
+     * Fired when an error occurs. This is GL JS's primary error reporting mechanism. We use an event instead of throw
+     * to better accommodate asyncronous operations. If no listeners are bound to the error event, the error will be
+     * printed to the console.
+     */
     MapEventType<Event> error = new MapEventType<>("error");
-    MapEventType<Event> data = new MapEventType<>("data");
-    MapEventType<Event> styledata = new MapEventType<>("styledata");
-    MapEventType<Event> sourcedata = new MapEventType<>("sourcedata");
-    MapEventType<Event> dataloading = new MapEventType<>("dataloading");
-    MapEventType<Event> styledataloading = new MapEventType<>("styledataloading");
-    MapEventType<Event> sourcedataloading = new MapEventType<>("sourcedataloading");
+
+    /**
+     * Fired when any map data (style, source, tile, etc) begins loading or changing asyncronously. All dataloading
+     * events are followed by a data or error event. See MapDataEvent for more information.
+     */
+    MapEventType<MapDataEvent> dataloading = new MapEventType<>("dataloading");
+    /** Fired when any map data loads or changes. See MapDataEvent for more information. */
+    MapEventType<MapDataEvent> data = new MapEventType<>("data");
+
+    /**
+     * Fired when the map's style begins loading or changing asyncronously. All styledataloading events are followed by
+     * a styledata or error event. See MapDataEvent for more information.
+     */
+    MapEventType<MapDataEvent> styledataloading = new MapEventType<>("styledataloading");
+    /** Fired when the map's style loads or changes. See MapDataEvent for more information. */
+    MapEventType<MapDataEvent> styledata = new MapEventType<>("styledata");
+
+    /**
+     * Fired when one of the map's sources begins loading or changing asyncronously. All sourcedataloading events are
+     * followed by a sourcedata or error event. See MapDataEvent for more information.
+     */
+    MapEventType<MapDataEvent> sourcedataloading = new MapEventType<>("sourcedataloading");
+    /**
+     * Fired when one of the map's sources loads or changes, including if a tile belonging to a source loads or changes.
+     * See MapDataEvent for more information.
+     */
+    MapEventType<MapDataEvent> sourcedata = new MapEventType<>("sourcedata");
 }

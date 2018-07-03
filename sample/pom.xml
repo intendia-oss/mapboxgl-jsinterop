@@ -32,7 +32,7 @@
     <dependencies><!--@formatter:off-->
         <dependency><groupId>com.google.gwt</groupId><artifactId>gwt-user</artifactId></dependency>
         <dependency><groupId>com.google.gwt</groupId><artifactId>gwt-dev</artifactId></dependency>
-        <dependency><groupId>com.intendia.mapboxgl-jsinterop</groupId><artifactId>mapboxgl-jsinterop</artifactId><version>${project.version}</version></dependency>
+        <dependency><groupId>com.intendia.mapboxgl-jsinterop</groupId><artifactId>mapboxgl-jsinterop</artifactId><version>${project.version}</version><type>gwt-lib</type></dependency>
         <dependency><groupId>org.jboss.gwt.elemento</groupId><artifactId>elemento-core</artifactId><version>0.8.2-gwt2</version></dependency>
         <!-- Test dependencies -->
         <dependency><groupId>junit</groupId><artifactId>junit</artifactId></dependency>
