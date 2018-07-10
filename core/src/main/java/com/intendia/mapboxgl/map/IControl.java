@@ -6,9 +6,11 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true)
 public interface IControl {
     /**
-     * Optionally provide a default position for this control. If this method is implemented and {@link Map#addControl}
-     * is called without the position parameter, the value returned by getDefaultPosition will be used as the control's
-     * position.
+     * Provide a default position for this control. If {@link Map#addControl} is called without the position parameter,
+     * the value returned by getDefaultPosition will be used as the control's position.
+     *
+     * Valid values are 'top-left' ,  'top-right',  'bottom-left', and  'bottom-right' (javascript defaults to
+     * 'top-right' but do not apply to java GWT as you are forced to implement this method).
      */
     String getDefaultPosition();
 

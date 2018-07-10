@@ -1,6 +1,7 @@
 package com.intendia.sample.client;
 
 import static elemental2.dom.DomGlobal.console;
+import static org.jboss.gwt.elemento.core.Elements.button;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -12,6 +13,7 @@ import com.intendia.mapboxgl.draw.Draw.DrawOptions;
 import com.intendia.mapboxgl.draw.DrawGlobal;
 import com.intendia.mapboxgl.map.FullscreenControl;
 import com.intendia.mapboxgl.map.GeolocateControl;
+import com.intendia.mapboxgl.map.IControl;
 import com.intendia.mapboxgl.map.Map;
 import com.intendia.mapboxgl.map.Map.MapOptions;
 import com.intendia.mapboxgl.map.MapEventType;
@@ -20,8 +22,15 @@ import com.intendia.mapboxgl.map.NavigationControl;
 import com.intendia.mapboxgl.map.ScaleControl;
 import elemental2.dom.HTMLElement;
 import org.jboss.gwt.elemento.core.Elements;
+import org.jboss.gwt.elemento.core.EventType;
 
 public class SampleEntryPoint implements EntryPoint {
+    static String[] styles = {
+            "https://tiles.intendia.com/styles/simple/style.json",
+            "https://tiles.intendia.com/styles/streets/style.json"
+    };
+    static int styleIdx = styles.length - 1;
+    static String nextStyle() { return styles[++styleIdx % styles.length]; }
 
     @Override public void onModuleLoad() {
         Resources.inject();
@@ -34,7 +43,7 @@ public class SampleEntryPoint implements EntryPoint {
 
             MapOptions mapOptions = new MapOptions();
             mapOptions.container = container;
-            mapOptions.style = "https://tiles.intendia.com/styles/positron/style.json";
+            mapOptions.style = nextStyle();
             mapOptions.center = new double[] { -3, 40 };/*Madrid*/
             mapOptions.zoom = 5;
             mapOptions.trackResize = true;
@@ -51,6 +60,18 @@ public class SampleEntryPoint implements EntryPoint {
             drawControls.point = true; drawControls.polygon = true; drawControls.trash = true;
             Draw draw = new Draw(drawOptions);
             map.addControl(draw);
+
+            map.addControl(new IControl() {
+                HTMLElement el = Elements.div().css("mapboxgl-ctrl-group mapboxgl-ctrl")
+                        .add(button("·").on(EventType.click, ev -> {
+                            console.log("anonymousControl.click", ev);
+                            map.setStyle(nextStyle());
+                        }))
+                        .asElement();
+                @Override public String getDefaultPosition() { return "top-right"; }
+                @Override public HTMLElement onAdd(Map map) { console.log("anonymousControl.onAdd", map); return el; }
+                @Override public void onRemove(Map map) { console.log("anonymous.onRemove", map); }
+            });
 
             bindEvent(map, MapGlobal.load);
             // bindEvent(map, MapGlobal.dataloading); bindEvent(map, MapGlobal.data); //too many events!

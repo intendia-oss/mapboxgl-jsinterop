@@ -2,12 +2,16 @@ package com.intendia.mapboxgl.map;
 
 import static jsinterop.annotations.JsPackage.GLOBAL;
 
+import elemental2.core.Function;
 import elemental2.dom.HTMLElement;
 import javax.annotation.Nullable;
 import jsinterop.annotations.JsFunction;
 import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
+import jsinterop.base.Any;
+import jsinterop.base.JsPropertyMap;
 
 @JsType(isNative = true)
 public class Map implements Evented {
@@ -29,6 +33,68 @@ public class Map implements Evented {
     public native Map on(String type, String layer, Listener fn);
 
     public native Map off(String type, String layer, Listener fn);
+
+    /** @see #queryRenderedFeatures(Object, QueryRenderedFeaturesOptions) */
+    public native QueryRenderedFeaturesResult[] queryRenderedFeatures(@Nullable Object geometry);
+
+    /**
+     * Returns an array of GeoJSON Feature objects representing visible features that satisfy the query parameters.
+     *
+     * @param geometry (PointLike|Array<PointLike>) The geometry of the query region: either a single point or southwest
+     * and northeast points describing a bounding box. Omitting this parameter (i.e. calling Map#queryRenderedFeatures
+     * with zero arguments, or with only a options argument) is equivalent to passing a bounding box encompassing the
+     * entire map viewport.
+     * @see <a href="https://www.mapbox.com/mapbox-gl-js/api/#map#queryrenderedfeatures">API #queryRenderedFeatures</a>
+     */
+    public native QueryRenderedFeaturesResult[] queryRenderedFeatures(@Nullable Object geometry,
+            @Nullable QueryRenderedFeaturesOptions options);
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class QueryRenderedFeaturesOptions {
+        /**
+         * (Array<string>?) An array of style layer IDs for the query to inspect. Only features within these layers will
+         * be returned. If this parameter is undefined, all layers will be checked.
+         */
+        public String[] layers;
+
+        /** (Array?) A filter to limit query results. */
+        public Object[] filter;
+    }
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class QueryRenderedFeaturesResult {
+        public Object id;
+        public String type;
+        public JsPropertyMap<Object> properties;
+
+        public Object layer;
+        public String source;
+        public String sourceLayer;
+
+        public JsPropertyMap<Object> state;
+
+        public Object geometry;
+    }
+
+    /**
+     * Returns an array of GeoJSON Feature objects representing features within the specified vector tile or GeoJSON
+     * source that satisfy the query parameters.
+     *
+     * @see <a href="https://www.mapbox.com/mapbox-gl-js/api/#map#querysourcefeatures">API #querySourceFeatures</a>
+     */
+    public native Object[] querySourceFeatures(String sourceId, @Nullable QuerySourceFeaturesOptions options);
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class QuerySourceFeaturesOptions {
+        /**
+         * The name of the vector tile layer to query. For vector tile sources, this parameter is required. For GeoJSON
+         * sources, it is ignored.
+         */
+        public @Nullable String sourceLayer;
+
+        /** (Array?) A filter to limit query results. */
+        public Object[] filter;
+    }
 
     /** Adds a source to the map's style. */
     public native Map addSource(String id, Object source);
@@ -80,6 +146,18 @@ public class Map implements Evented {
      */
     public native Map setStyle(Object style, @Nullable StyleOptions options);
 
+    /** Sets the value of a paint property in the specified style layer. */
+    public native Map setPaintProperty(String layer, String name, Object value);
+
+    /** Returns the value of a paint property in the specified style layer. */
+    public native Any getPaintProperty(String layer, String name);
+
+    /** Sets the value of a layout property in the specified style layer. */
+    public native Map setLayoutProperty(String layer, String name, Object value);
+
+    /** Returns the value of a layout property in the specified style layer. */
+    public native Any getLayoutProperty(String layer, String name);
+
     @JsType(namespace = GLOBAL, name = "Object", isNative = true)
     public static class StyleOptions {
         /**
@@ -102,21 +180,53 @@ public class Map implements Evented {
 
     public native LngLatBounds getBounds();
 
-    public native int getZoom();
+    /** Returns the map's current zoom level. */
+    public native double getZoom();
 
-    public native Map setZoom(int zoom);
+    /** Sets the map's zoom level. Equivalent to {@code jumpTo({zoom: zoom})}. */
+    public native Map setZoom(double zoom);
 
-    public native Map panTo(double[] lngLat, @Nullable Object options, @Nullable Object eventData);
+    /** Zooms the map to the specified zoom level, with an animated transition. */
+    public native Map zoomTo(double zoom);
 
-    public native Map panTo(LngLat lngLat, @Nullable Object options, @Nullable Object eventData);
+    /** Increases the map's zoom level by 1. */
+    public native Map zoomIn();
 
-    public native Map fitBounds(double[] westSouthEastNorth, @Nullable FitBoundsOptions options, @Nullable Object eventData);
+    /** Increases the map's zoom level by 1. */
+    public native Map zoomIn(Object options, Object eventData);
 
-    public native Map fitBounds(LngLatBounds westSouthEastNorth, @Nullable FitBoundsOptions options, @Nullable Object eventData);
+    /** Decreases the map's zoom level by 1. */
+    public native Map zoomOut();
+
+    /** Decreases the map's zoom level by 1. */
+    public native Map zoomOut(Object options, Object eventData);
+
+    /** Zooms the map to the specified zoom level, with an animated transition. */
+    public native Map zoomTo(double zoom, Object options, Object eventData);
+
+    public native Map panTo(double[] lngLat);
+
+    public native Map panTo(LngLat lngLat);
+
+    public native Map panTo(double[] lngLat, @Nullable AnimationOptions options, @Nullable Object eventData);
+
+    public native Map panTo(LngLat lngLat, @Nullable AnimationOptions options, @Nullable Object eventData);
+
+    public native Map fitBounds(double[] westSouthEastNorth, @Nullable FitBoundsOptions options,
+            @Nullable Object eventData);
+
+    public native Map fitBounds(LngLatBounds westSouthEastNorth, @Nullable FitBoundsOptions options,
+            @Nullable Object eventData);
+
+    public native Map jumpTo(CameraOptions options);
 
     public native Map jumpTo(CameraOptions options, @Nullable Object eventData);
 
+    public native Map easeTo(CameraOptions options);
+
     public native Map easeTo(CameraOptions options, @Nullable Object eventData);
+
+    public native Map flyTo(CameraOptions options);
 
     public native Map flyTo(CameraOptions options, @Nullable Object eventData);
 
@@ -149,6 +259,12 @@ public class Map implements Evented {
         public double[] center;
         public int zoom;
         public boolean attributionControl;
+
+        /**
+         * If  false , no mouse, touch, or keyboard listeners will be attached to the map, so it will not respond to
+         * interaction.
+         */
+        public boolean interactive;
     }
 
     /**
@@ -158,16 +274,31 @@ public class Map implements Evented {
      */
     @JsType(namespace = GLOBAL, name = "Object", isNative = true)
     public static class CameraOptions {
+
         /** (LngLatLike): The desired center. */
         public double[] center;
+        public final @JsOverlay CameraOptions center(double[] center) { this.center = center; return this; }
+
         /** (number): The desired zoom level. */
         public double zoom;
-        /** (number): The desired bearing, in degrees. The bearing is the compass direction that is "up"; for example, a bearing of 90° orients the map so that east is up. */
+        public final @JsOverlay CameraOptions zoom(double zoom) { this.zoom = zoom; return this; }
+
+        /**
+         * (number): The desired bearing, in degrees. The bearing is the compass direction that is "up"; for example, a
+         * bearing of 90° orients the map so that east is up.
+         */
         public double bearing;
+        public final @JsOverlay CameraOptions bearing(double bearing) { this.bearing = bearing; return this; }
+
         /** (number): The desired pitch, in degrees. */
         public double pitch;
+        public final @JsOverlay CameraOptions pitch(double pitch) { this.pitch = pitch; return this; }
+
         /** (LngLatLike): If  zoom is specified,  around determines the point around which the zoom is centered. */
         public double[] around;
+        public final @JsOverlay CameraOptions around(double[] around) { this.around = around; return this; }
+
+        public static @JsOverlay CameraOptions cameraOptions() { return new CameraOptions(); }
     }
 
     @FunctionalInterface @JsFunction
@@ -177,16 +308,43 @@ public class Map implements Evented {
 
     @JsType(namespace = GLOBAL, name = "Object", isNative = true)
     public static class FitBoundsOptions {
-        /** The amount of padding in pixels to add to the given bounds. */
-        public double padding;
+        /** (number | PaddingOptions) The amount of padding in pixels to add to the given bounds. */
+        public Object padding;
+        public final @JsOverlay FitBoundsOptions padding(double padding) { this.padding = padding; return this; }
+        public final @JsOverlay FitBoundsOptions padding(double top, double right, double bottom, double left) {
+            PaddingOptions out = new PaddingOptions();
+            out.top = top; out.right = right; out.bottom = bottom; out.left = left;
+            padding = out;
+            return this;
+        }
 
         /**
          * If true, the map transitions using Map#easeTo. If false, the map transitions using Map#flyTo. See those
          * functions and AnimationOptions for information about options available.
          */
         public boolean linear;
+        public final @JsOverlay FitBoundsOptions linear(boolean linear) { this.linear = linear; return this; }
 
         /** The maximum zoom level to allow when the map view transitions to the specified bounds. */
         public double maxZoom;
+        public final @JsOverlay FitBoundsOptions maxZoom(double maxZoom) { this.maxZoom = maxZoom; return this; }
+
+        public static @JsOverlay FitBoundsOptions fitBoundsOptions() { return new FitBoundsOptions(); }
+    }
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class PaddingOptions {
+        public double top;
+        public double bottom;
+        public double left;
+        public double right;
+    }
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class AnimationOptions {
+        public double duration;
+        public Function easing;
+        public Object offset;
+        public boolean animate;
     }
 }

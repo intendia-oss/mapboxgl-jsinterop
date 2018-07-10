@@ -15,7 +15,15 @@ public class LngLatBounds {
     public native LngLatBounds extend(LngLatBounds bounds);
     public native double[] toArray();
 
-    public native static LngLatBounds convert(Object input);
+    /**
+     * Converts an array to a LngLatBounds object:
+     * <ul>
+     * <li>an array of LngLatLike objects in [sw, ne] order</li>
+     * <li>an array of numbers in [west, south, east, north] order</li>
+     * </ul>
+     * If a LngLatBounds object is passed in, the function returns it unchanged.
+     */
+    public native static LngLatBounds convert(/*LngLatBoundsLike*/Object input);
 
     public final @JsOverlay boolean contains(LngLat ll) {
         return ll.lng <= getEast() && ll.lng >= getWest()
