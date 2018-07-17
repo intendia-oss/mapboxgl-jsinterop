@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 import elemental2.core.Global;
+import javax.annotation.Nullable;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
 
@@ -12,7 +13,7 @@ public final class ToolsGlobal {
 
     /** Given any valid GeoJSON, return bounds in the form [WSEN]. Invalid objects returns null. */
     @JsMethod(namespace = JsPackage.GLOBAL, name = "geojsonExtent")
-    public static native double[] extent(/*GeoJSON*/Object value);
+    public static native @Nullable double[] extent(/*GeoJSON*/Object value);
 
     public static void ensureInjected() {
         Resources resources = GWT.create(Resources.class);

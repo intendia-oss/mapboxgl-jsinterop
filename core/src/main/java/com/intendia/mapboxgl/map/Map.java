@@ -99,6 +99,9 @@ public class Map implements Evented {
     /** Adds a source to the map's style. */
     public native Map addSource(String id, Object source);
 
+    /** Returns a Boolean indicating whether the source is loaded. */
+    public native boolean isSourceLoaded(String sourceId);
+
     /** Removes a source from the map's style. */
     public native Map removeSource(String id);
 

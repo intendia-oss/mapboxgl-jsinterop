@@ -21,6 +21,7 @@ import com.intendia.mapboxgl.map.MapGlobal;
 import com.intendia.mapboxgl.map.NavigationControl;
 import com.intendia.mapboxgl.map.ScaleControl;
 import elemental2.dom.HTMLElement;
+import javax.annotation.Nullable;
 import org.jboss.gwt.elemento.core.Elements;
 import org.jboss.gwt.elemento.core.EventType;
 
@@ -55,22 +56,34 @@ public class SampleEntryPoint implements EntryPoint {
             map.addControl(new NavigationControl());
             map.addControl(new ScaleControl());
 
-            DrawOptions drawOptions = new DrawOptions();
-            Draw.Controls drawControls = drawOptions.controls = Draw.Controls.create();
-            drawControls.point = true; drawControls.polygon = true; drawControls.trash = true;
-            Draw draw = new Draw(drawOptions);
-            map.addControl(draw);
-
             map.addControl(new IControl() {
                 HTMLElement el = Elements.div().css("mapboxgl-ctrl-group mapboxgl-ctrl")
-                        .add(button("·").on(EventType.click, ev -> {
-                            console.log("anonymousControl.click", ev);
-                            map.setStyle(nextStyle());
+                        .add(button("S").title("Next style").on(EventType.click, ev -> map.setStyle(nextStyle())))
+                        .asElement();
+                @Override public String getDefaultPosition() { return "top-right"; }
+                @Override public HTMLElement onAdd(Map map) { return el; }
+                @Override public void onRemove(Map map) { }
+            });
+
+            map.addControl(new IControl() {
+                @Nullable Draw draw;
+                HTMLElement el = Elements.div().css("mapboxgl-ctrl-group mapboxgl-ctrl")
+                        .add(button("D").title("Toggle draw control").on(EventType.click, ev -> {
+                            if (draw == null) {
+                                DrawOptions drawOptions = new DrawOptions();
+                                Draw.Controls drawControls = drawOptions.controls = Draw.Controls.create();
+                                drawControls.point = true; drawControls.polygon = true; drawControls.trash = true;
+                                draw = new Draw(drawOptions);
+                                map.addControl(draw);
+                            } else {
+                                map.removeControl(draw);
+                                draw = null;
+                            }
                         }))
                         .asElement();
                 @Override public String getDefaultPosition() { return "top-right"; }
-                @Override public HTMLElement onAdd(Map map) { console.log("anonymousControl.onAdd", map); return el; }
-                @Override public void onRemove(Map map) { console.log("anonymous.onRemove", map); }
+                @Override public HTMLElement onAdd(Map map) { return el; }
+                @Override public void onRemove(Map map) { }
             });
 
             bindEvent(map, MapGlobal.load);
