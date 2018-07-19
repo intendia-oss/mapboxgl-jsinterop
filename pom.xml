@@ -112,6 +112,9 @@
                     <configuration>
                         <skipModule>true</skipModule>
                         <failOnError>true</failOnError>
+                        <startupUrls>
+                            <url>/app</url>
+                        </startupUrls>
                     </configuration>
                 </plugin>
             </plugins>
