@@ -4,6 +4,7 @@ import static jsinterop.annotations.JsPackage.GLOBAL;
 
 import elemental2.core.Function;
 import elemental2.dom.HTMLElement;
+import javaemul.internal.annotations.DoNotAutobox;
 import javax.annotation.Nullable;
 import jsinterop.annotations.JsFunction;
 import jsinterop.annotations.JsMethod;
@@ -150,13 +151,13 @@ public class Map implements Evented {
     public native Map setStyle(Object style, @Nullable StyleOptions options);
 
     /** Sets the value of a paint property in the specified style layer. */
-    public native Map setPaintProperty(String layer, String name, Object value);
+    public native Map setPaintProperty(String layer, String name, @DoNotAutobox Object value);
 
     /** Returns the value of a paint property in the specified style layer. */
     public native Any getPaintProperty(String layer, String name);
 
     /** Sets the value of a layout property in the specified style layer. */
-    public native Map setLayoutProperty(String layer, String name, Object value);
+    public native Map setLayoutProperty(String layer, String name, @DoNotAutobox Object value);
 
     /** Returns the value of a layout property in the specified style layer. */
     public native Any getLayoutProperty(String layer, String name);
