@@ -208,30 +208,68 @@ public class Map implements Evented {
     /** Zooms the map to the specified zoom level, with an animated transition. */
     public native Map zoomTo(double zoom, Object options, Object eventData);
 
+    /** Pans the map to the specified location, with an animated transition. */
     public native Map panTo(double[] lngLat);
 
+    /** Pans the map to the specified location, with an animated transition. */
     public native Map panTo(LngLat lngLat);
 
+    /** Pans the map to the specified location, with an animated transition. */
     public native Map panTo(double[] lngLat, @Nullable AnimationOptions options, @Nullable Object eventData);
 
+    /** Pans the map to the specified location, with an animated transition. */
     public native Map panTo(LngLat lngLat, @Nullable AnimationOptions options, @Nullable Object eventData);
 
+    /**
+     * Pans and zooms the map to contain its visible area within the specified geographical bounds. This function will
+     * also reset the map's bearing to 0 if bearing is nonzero.
+     */
     public native Map fitBounds(double[] westSouthEastNorth, @Nullable FitBoundsOptions options,
             @Nullable Object eventData);
 
+    /**
+     * Pans and zooms the map to contain its visible area within the specified geographical bounds. This function will
+     * also reset the map's bearing to 0 if bearing is nonzero.
+     */
     public native Map fitBounds(LngLatBounds westSouthEastNorth, @Nullable FitBoundsOptions options,
             @Nullable Object eventData);
 
+    /**
+     * Changes any combination of center, zoom, bearing, and pitch, without an animated transition. The map will retain
+     * its current values for any details not specified in options.
+     */
     public native Map jumpTo(CameraOptions options);
 
+    /**
+     * Changes any combination of center, zoom, bearing, and pitch, without an animated transition. The map will retain
+     * its current values for any details not specified in options.
+     */
     public native Map jumpTo(CameraOptions options, @Nullable Object eventData);
 
+    /**
+     * Changes any combination of center, zoom, bearing, and pitch, with an animated transition between old and new
+     * values. The map will retain its current values for any details not specified in options.
+     */
     public native Map easeTo(CameraOptions options);
 
+    /**
+     * Changes any combination of center, zoom, bearing, and pitch, with an animated transition between old and new
+     * values. The map will retain its current values for any details not specified in options.
+     */
     public native Map easeTo(CameraOptions options, @Nullable Object eventData);
 
+    /**
+     * Changes any combination of center, zoom, bearing, and pitch, animating the transition along a curve that evokes
+     * flight. The animation seamlessly incorporates zooming and panning to help the user maintain her bearings even
+     * after traversing a great distance.
+     */
     public native Map flyTo(CameraOptions options);
 
+    /**
+     * Changes any combination of center, zoom, bearing, and pitch, animating the transition along a curve that evokes
+     * flight. The animation seamlessly incorporates zooming and panning to help the user maintain her bearings even
+     * after traversing a great distance.
+     */
     public native Map flyTo(CameraOptions options, @Nullable Object eventData);
 
     /**
@@ -244,6 +282,13 @@ public class Map implements Evented {
     /** Returns the map's current pitch (tilt). */
     public native double getPitch();
     public native Map setPitch(double pitch);
+
+    /**
+     * If map is able to fit to provided bounds, returns  CameraOptions with at least  center,  zoom,  bearing, offset,
+     * padding, and  maxZoom, as well as any other options provided in arguments. If map is unable to fit, method will
+     * warn and return undefined.
+     */
+    public native @Nullable CameraOptions cameraForBounds(LngLatBounds bounds);
 
     /** Returns a Boolean indicating whether the map is fully loaded. */
     public native boolean loaded();
@@ -265,7 +310,7 @@ public class Map implements Evented {
         public boolean attributionControl;
 
         /**
-         * If  false , no mouse, touch, or keyboard listeners will be attached to the map, so it will not respond to
+         * If false, no mouse, touch, or keyboard listeners will be attached to the map, so it will not respond to
          * interaction.
          */
         public boolean interactive;

@@ -5,15 +5,32 @@ import jsinterop.annotations.JsType;
 
 @JsType(isNative = true)
 public class LngLatBounds {
+
     public LngLatBounds(double[] westSouth, double[] EastNorth) {}
+
+    /** Extend the bounds to include a given LngLat or LngLatBounds. */
+    public native LngLatBounds extend(double[] lngLat);
+    /** Extend the bounds to include a given LngLat or LngLatBounds. */
+    public native LngLatBounds extend(LngLat lntLat);
+    /** Extend the bounds to include a given LngLat or LngLatBounds. */
+    public native LngLatBounds extend(LngLatBounds bounds);
+
+    /** Returns the geographical coordinate equidistant from the bounding box's corners. */
+    public native Point getCenter();
+
     public native double getWest();
     public native double getSouth();
     public native double getEast();
     public native double getNorth();
-    public native LngLatBounds extend(double[] lngLat);
-    public native LngLatBounds extend(LngLat lntLat);
-    public native LngLatBounds extend(LngLatBounds bounds);
-    public native double[] toArray();
+
+    /**
+     * Returns the bounding box represented as an array, consisting of the southwest and northeast coordinates of the
+     * bounding represented as arrays of numbers.
+     */
+    public native double[][] toArray();
+
+    /** Check if the bounding box is an empty/null-type box. */
+    public native boolean isEmpty();
 
     /**
      * Converts an array to a LngLatBounds object:
