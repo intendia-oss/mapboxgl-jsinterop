@@ -2,6 +2,7 @@ package com.intendia.mapboxgl.map;
 
 import static jsinterop.annotations.JsPackage.GLOBAL;
 
+import jsinterop.annotations.JsFunction;
 import jsinterop.annotations.JsType;
 
 /**
@@ -61,4 +62,36 @@ public class GeoJSONSource implements Evented {
     @Override public native Map off(String type, Map.Listener fn);
 
     @Override public native Map once(String type, Map.Listener fn);
+
+    /**
+     * For clustered sources, fetches the zoom at which the given cluster expands.
+     *
+     * @param clusterId The value of the cluster's  cluster_id property.
+     * @param callback A callback to be called when the zoom value is retrieved ( (error, zoom) => { ... } ).
+     */
+    public native GeoJSONSource getClusterExpansionZoom(int clusterId, Callback<Double> callback);
+
+    /**
+     * For clustered sources, fetches the children of the given cluster on the next zoom level (as an array of GeoJSON
+     * features).
+     *
+     * @param clusterId The value of the cluster's  cluster_id property.
+     * @param callback A callback to be called when the features are retrieved ( (error, features) => { ... } ).
+     */
+    public native GeoJSONSource getClusterChildren(int clusterId, Callback</*GeoJSONFeature*/Object[]> callback);
+
+    /**
+     * For clustered sources, fetches the original points that belong to the cluster (as an array of GeoJSON features).
+     *
+     * @param clusterId The value of the cluster's  cluster_id property.
+     * @param limit The maximum number of features to return.
+     * @param offset The number of features to skip (e.g. for pagination).
+     * @param callback A callback to be called when the features are retrieved ( (error, features) => { ... } ).
+     */
+    public native GeoJSONSource getClusterLeaves(int clusterId, int limit, int offset,
+            Callback</*GeoJSONFeature*/Object[]> callback);
+
+    @FunctionalInterface @JsFunction public interface Callback<T> {
+        void onInvoke(Object error, T result);
+    }
 }

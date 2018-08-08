@@ -57,9 +57,19 @@ public class Map implements Evented {
          * be returned. If this parameter is undefined, all layers will be checked.
          */
         public String[] layers;
+        public final @JsOverlay QueryRenderedFeaturesOptions layers(String... layers) {
+            this.layers = layers; return this;
+        }
 
         /** (Array?) A filter to limit query results. */
         public Object[] filter;
+        public final @JsOverlay QueryRenderedFeaturesOptions filter(Object... filter) {
+            this.filter = filter; return this;
+        }
+
+        public static @JsOverlay QueryRenderedFeaturesOptions queryRenderedFeaturesOptions() {
+            return new QueryRenderedFeaturesOptions();
+        }
     }
 
     @JsType(namespace = GLOBAL, name = "Object", isNative = true)
@@ -92,9 +102,19 @@ public class Map implements Evented {
          * sources, it is ignored.
          */
         public @Nullable String sourceLayer;
+        public final @JsOverlay QuerySourceFeaturesOptions sourceLayer(String sourceLayer) {
+            this.sourceLayer = sourceLayer; return this;
+        }
 
         /** (Array?) A filter to limit query results. */
         public Object[] filter;
+        public final @JsOverlay QuerySourceFeaturesOptions filter(Object... filter) {
+            this.filter = filter; return this;
+        }
+
+        public static @JsOverlay QuerySourceFeaturesOptions querySourceFeaturesOptions() {
+            return new QuerySourceFeaturesOptions();
+        }
     }
 
     /** Adds a source to the map's style. */
