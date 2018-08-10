@@ -129,6 +129,32 @@ public class Map implements Evented {
     /** Returns the source with the specified ID in the map's style. */
     public native @Nullable Object getSource(String id);
 
+    /**
+     * Add an image to the style. This image can be used in icon-image, background-pattern, fill-pattern, and
+     * line-pattern. An Map#error event will be fired if there is not enough space in the sprite to add this image.
+     *
+     * @param id (string) The ID of the image.
+     * @param image ((HTMLImageElement | ImageData | {width: number,height: number,data: (Uint8Array |
+     * Uint8ClampedArray)})) The image as an  HTMLImageElement ,  ImageData , or object with  width ,  height , and
+     * data properties with the same format as  ImageData .
+     */
+    public native Map addImage(String id, Object image, AddImageOptions options);
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class AddImageOptions {
+        /** The ratio of pixels in the image to physical pixels on the screen. */
+        public double pixelRatio;
+
+        /** Whether the image should be interpreted as an SDF image. */
+        public boolean sdf;
+    }
+
+    /** Define whether the image has been added or not. */
+    public native boolean hasImage(String id);
+
+    /** Remove an image from the style (such as one used by icon-image or background-pattern). */
+    public native Map removeImage(String id);
+
     /** Adds a Mapbox style layer to the map's style. */
     public native Map addLayer(Object layer);
     /** Adds a Mapbox style layer to the map's style. */
