@@ -16,7 +16,7 @@ public class LngLatBounds {
     public native LngLatBounds extend(LngLatBounds bounds);
 
     /** Returns the geographical coordinate equidistant from the bounding box's corners. */
-    public native Point getCenter();
+    public native LngLat getCenter();
 
     public native double getWest();
     public native double getSouth();
