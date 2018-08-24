@@ -1,6 +1,5 @@
 package com.intendia.mapboxgl.map;
 
-import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true)
@@ -41,9 +40,4 @@ public class LngLatBounds {
      * If a LngLatBounds object is passed in, the function returns it unchanged.
      */
     public native static LngLatBounds convert(/*LngLatBoundsLike*/Object input);
-
-    public final @JsOverlay boolean contains(LngLat ll) {
-        return ll.lng <= getEast() && ll.lng >= getWest()
-                && ll.lat <= getNorth() && ll.lat >= getSouth();
-    }
 }
