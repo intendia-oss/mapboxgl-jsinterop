@@ -17,10 +17,12 @@ import jsinterop.annotations.JsType;
  * suited for the desktop. If trackUserLocation is true the control acts as a toggle button that when active the user's
  * location is actively monitored for changes. In this mode the GeolocateControl has three states:
  *
+ * <ul>
  * <li>active - the map's camera automatically updates as the user's location changes, keeping the location dot in the
- * center.
- * <li>passive - the user's location dot automatically updates, but the map's camera does not.
- * <li>disabled
+ * center.</li>
+ * <li>passive - the user's location dot automatically updates, but the map's camera does not.</li>
+ * <li>disabled</li>
+ * </ul>
  */
 @JsType(isNative = true)
 public class GeolocateControl implements IControl, Evented {

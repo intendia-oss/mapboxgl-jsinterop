@@ -15,8 +15,10 @@ public class MapDataEvent {
 
     /**
      * dataType(string): The type of data that has changed. One of  {@code source}, {@code style}.
+     * <ul>
      * <li>'source': The non-tile data associated with any source
      * <li>'style': The style used by the map
+     * </ul>
      */
     public String dataType;
 

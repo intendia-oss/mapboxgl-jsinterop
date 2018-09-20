@@ -17,22 +17,22 @@ public class Point {
     /** Clone this point, returning a new point that can be modified without affecting the old one. */
     public native Point clone();
 
-    /** Add this point's x & y coordinates to another point, yielding a new point. */
+    /** Add this point's [x, y] coordinates to another point, yielding a new point. */
     public native Point add(Point p);
 
-    /** Subtract this point's x & y coordinates to from point, yielding a new point. */
+    /** Subtract this point's [x, y] coordinates to from point, yielding a new point. */
     public native Point sub(Point p);
 
-    /** Multiply this point's x & y coordinates by point, yielding a new point. */
+    /** Multiply this point's [x, y] coordinates by point, yielding a new point. */
     public native Point multByPoint(Point p);
 
-    /** Divide this point's x & y coordinates by point, yielding a new point. */
+    /** Divide this point's [x, y] coordinates by point, yielding a new point. */
     public native Point divByPoint(Point p);
 
-    /** Multiply this point's x & y coordinates by a factor, yielding a new point. */
+    /** Multiply this point's [x, y] coordinates by a factor, yielding a new point. */
     public native Point mult(Point p);
 
-    /** Divide this point's x & y coordinates by a factor, yielding a new point. */
+    /** Divide this point's [x, y] coordinates by a factor, yielding a new point. */
     public native Point div(Point p);
 
     /** Rotate this point around the 0, 0 origin by an angle a, given in radians. */
@@ -60,7 +60,7 @@ public class Point {
      */
     public native Point perp();
 
-    /** Return a version of this point with the x & y coordinates rounded to integers. */
+    /** Return a version of this point with the [x, y] coordinates rounded to integers. */
     public native Point round();
 
     /**
@@ -97,7 +97,7 @@ public class Point {
      * Construct a point from an array if necessary, otherwise if the input is already a Point, or an unknown type,
      * return it unchanged.
      *
-     * @param pointLike (Array<Number>|Point) any kind of input value
+     * @param pointLike {@code (Array<Number>|Point)} any kind of input value
      */
     public static native Point convert(Object pointLike);
 }

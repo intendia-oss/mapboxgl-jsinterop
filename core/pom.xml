@@ -8,6 +8,7 @@
     </parent>
     <artifactId>mapboxgl-jsinterop</artifactId>
     <packaging>gwt-lib</packaging>
+    <name>MapboxGL JsInterop :: Core</name>
 
     <build>
         <plugins>

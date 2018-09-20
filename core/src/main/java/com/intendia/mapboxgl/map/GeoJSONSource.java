@@ -67,7 +67,7 @@ public class GeoJSONSource implements Evented {
      * For clustered sources, fetches the zoom at which the given cluster expands.
      *
      * @param clusterId The value of the cluster's  cluster_id property.
-     * @param callback A callback to be called when the zoom value is retrieved ( (error, zoom) => { ... } ).
+     * @param callback A callback to be called when the zoom value is retrieved {@code (error, zoom) => { ... }}.
      */
     public native GeoJSONSource getClusterExpansionZoom(int clusterId, Callback<Double> callback);
 
@@ -76,7 +76,7 @@ public class GeoJSONSource implements Evented {
      * features).
      *
      * @param clusterId The value of the cluster's  cluster_id property.
-     * @param callback A callback to be called when the features are retrieved ( (error, features) => { ... } ).
+     * @param callback A callback to be called when the features are retrieved {@code (error, features) => { ... }}.
      */
     public native GeoJSONSource getClusterChildren(int clusterId, Callback</*GeoJSONFeature*/Object[]> callback);
 
@@ -86,7 +86,7 @@ public class GeoJSONSource implements Evented {
      * @param clusterId The value of the cluster's  cluster_id property.
      * @param limit The maximum number of features to return.
      * @param offset The number of features to skip (e.g. for pagination).
-     * @param callback A callback to be called when the features are retrieved ( (error, features) => { ... } ).
+     * @param callback A callback to be called when the features are retrieved {@code (error, features) => { ... }}.
      */
     public native GeoJSONSource getClusterLeaves(int clusterId, int limit, int offset,
             Callback</*GeoJSONFeature*/Object[]> callback);

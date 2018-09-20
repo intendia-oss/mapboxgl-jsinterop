@@ -51,7 +51,6 @@ public class Draw implements IControl {
     @Override public native void onRemove(Map map);
 
     /**
-     * add(geojson: Object) => Array<string>
      * This method takes either a GeoJSON Feature, FeatureCollection, or Geometry and adds it to Draw. It returns an
      * array of ids for interacting with the added features. If a feature does not have its own id, one is automatically
      * generated.
@@ -64,14 +63,10 @@ public class Draw implements IControl {
      */
     public native String[] add(Object geojson);
 
-    /**
-     * get(featureId: string): ?Feature
-     * Returns the GeoJSON feature in Draw with the specified id, or undefined if the id matches no feature.
-     */
+    /** Returns the GeoJSON feature in Draw with the specified id, or undefined if the id matches no feature. */
     public native @Nullable /*Feature*/Object get(String featureId);
 
     /**
-     * getFeatureIdsAt(point: { x: number, y: number }): Array<string>
      * Returns an array of feature ids for features currently rendered at the specified point.
      *
      * Notice that the point argument requires x, y coordinates from pixel space, rather than longitude, latitude
@@ -81,46 +76,29 @@ public class Draw implements IControl {
      */
     public native String[] getFeatureIdsAt(/*[x,y]*/double[] point);
 
-    /**
-     * getSelectedIds(): Array<string>
-     * Returns an array of feature ids for features currently selected.
-     **/
+    /** Returns an array of feature ids for features currently selected. */
     public native String[] getSelectedIds();
 
-    /**
-     * getSelected(): FeatureCollection
-     * Returns a FeatureCollection of all the features currently selected.
-     **/
+    /** Returns a FeatureCollection of all the features currently selected. */
     public native /*FeatureCollection*/Object getSelected();
 
-    /**
-     * getSelectedPoints(): FeatureCollection
-     * Returns a FeatureCollection of Points representing all the vertices currently selected.
-     */
+    /** Returns a FeatureCollection of Points representing all the vertices currently selected. */
     public native /*FeatureCollection*/ Object getSelectedPoints();
 
-    /**
-     * getAll(): FeatureCollection
-     * Returns a FeatureCollection of all features.
-     */
+    /** Returns a FeatureCollection of all features. */
     public native /*FeatureCollection*/ Object getAll();
 
     /**
-     * delete(ids: string | Array<string>): draw
      * Removes features with the specified ids. Returns the draw instance for chaining.
      *
      * In direct_select mode, deleting the active feature will exit that mode and revert to the simple_select mode.
      */
     public native Draw delete(String... ids);
 
-    /**
-     * deleteAll(): draw
-     * Removes all features. Returns the draw instance for chaining.
-     */
+    /** Removes all features. Returns the draw instance for chaining. */
     public native Draw deleteAll();
 
     /**
-     * set(featureCollection: FeatureCollection): Array<string>
      * Sets Draw's features to those in the specified FeatureCollection.
      *
      * Performs whatever delete, create, and update actions are necessary to make Draw's features match the specified
@@ -129,44 +107,25 @@ public class Draw implements IControl {
      */
     public native String[] set(/*FeatureCollection*/Object featureCollection);
 
-    /**
-     * trash(): draw
-     * Invokes the current mode's trash action. Returns the draw instance for chaining.
-     */
+    /** Invokes the current mode's trash action. Returns the draw instance for chaining. */
     public native Draw trash();
 
-    /**
-     * combineFeatures(): draw
-     * Invokes the current mode's combineFeatures action. Returns the draw instance for chaining.
-     */
+    /** Invokes the current mode's combineFeatures action. Returns the draw instance for chaining. */
     public native Draw combineFeatures();
 
-    /**
-     * uncombineFeatures(): draw
-     * Invokes the current mode's uncombineFeatures action. Returns the draw instance for chaining.
-     */
+    /** Invokes the current mode's uncombineFeatures action. Returns the draw instance for chaining. */
     public native Draw uncombineFeatures();
 
-    /**
-     * getMode(): string
-     * Returns Draw's current mode. For more about the modes, see above.
-     */
+    /** Returns Draw's current mode. For more about the modes, see above. */
     public native String getMode();
 
-    /**
-     * changeMode(mode: string, options?: Object): draw
-     * Changes Draw to another mode. Returns the draw instance for chaining.
-     */
+    /** Changes Draw to another mode. Returns the draw instance for chaining. */
     public native Draw changeMode(String mode);
 
-    /**
-     * changeMode(mode: string, options?: Object): draw
-     * Changes Draw to another mode. Returns the draw instance for chaining.
-     */
+    /** Changes Draw to another mode. Returns the draw instance for chaining. */
     public native Draw changeMode(String mode, Object options);
 
     /**
-     * setFeatureProperty(featureId: string, property: string, value: any): draw
      * Sets the value of a property on the feature with the specified id. Returns the draw instance for chaining.
      * This is helpful if you are using Draw's features as your primary data store in your application.
      */
@@ -196,7 +155,7 @@ public class Draw implements IControl {
         public double touchBuffer;
 
         /**
-         * : Hide or show individual controls. Each property's name is a control, and value is a boolean indicating
+         * Hide or show individual controls. Each property's name is a control, and value is a boolean indicating
          * whether the control is on or off. Available control names are point, line_string, polygon, trash,
          * combine_features and uncombine_features. By default, all controls are on. To change that default, use
          * displayControlsDefault.

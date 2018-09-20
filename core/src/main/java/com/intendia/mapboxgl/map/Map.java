@@ -41,11 +41,11 @@ public class Map implements Evented {
     /**
      * Returns an array of GeoJSON Feature objects representing visible features that satisfy the query parameters.
      *
-     * @param geometry (PointLike|Array<PointLike>) The geometry of the query region: either a single point or southwest
-     * and northeast points describing a bounding box. Omitting this parameter (i.e. calling Map#queryRenderedFeatures
-     * with zero arguments, or with only a options argument) is equivalent to passing a bounding box encompassing the
-     * entire map viewport.
-     * @see <a href="https://www.mapbox.com/mapbox-gl-js/api/#map#queryrenderedfeatures">API #queryRenderedFeatures</a>
+     * @param geometry {@code (PointLike|Array<PointLike>)} The geometry of the query region: either a single point or
+     * southwest and northeast points describing a bounding box. Omitting this parameter (i.e. calling
+     * Map#queryRenderedFeatures with zero arguments, or with only a options argument) is equivalent to passing a
+     * bounding box encompassing the entire map viewport.
+     * @see <a href="https://www.mapbox.com/mapbox-gl-js/api/#map">API #queryRenderedFeatures</a>
      */
     public native QueryRenderedFeaturesResult[] queryRenderedFeatures(@Nullable Object geometry,
             @Nullable QueryRenderedFeaturesOptions options);
@@ -53,8 +53,8 @@ public class Map implements Evented {
     @JsType(namespace = GLOBAL, name = "Object", isNative = true)
     public static class QueryRenderedFeaturesOptions {
         /**
-         * (Array<string>?) An array of style layer IDs for the query to inspect. Only features within these layers will
-         * be returned. If this parameter is undefined, all layers will be checked.
+         * {@code (Array<string>?)} An array of style layer IDs for the query to inspect. Only features within these
+         * layers will be returned. If this parameter is undefined, all layers will be checked.
          */
         public String[] layers;
         public final @JsOverlay QueryRenderedFeaturesOptions layers(String... layers) {
@@ -91,7 +91,7 @@ public class Map implements Evented {
      * Returns an array of GeoJSON Feature objects representing features within the specified vector tile or GeoJSON
      * source that satisfy the query parameters.
      *
-     * @see <a href="https://www.mapbox.com/mapbox-gl-js/api/#map#querysourcefeatures">API #querySourceFeatures</a>
+     * @see <a href="https://www.mapbox.com/mapbox-gl-js/api/#map">API #querySourceFeatures</a>
      */
     public native Object[] querySourceFeatures(String sourceId, @Nullable QuerySourceFeaturesOptions options);
 
