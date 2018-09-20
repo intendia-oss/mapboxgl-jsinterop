@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.intendia.mapboxgl-jsinterop</groupId>
         <artifactId>mapboxgl-jsinterop-parent</artifactId>
-        <version>HEAD-SNAPSHOT</version>
+        <version>0.1-beta1</version>
     </parent>
     <artifactId>mapboxgl-jsinterop-sample</artifactId>
     <packaging>gwt-app</packaging>
