@@ -254,6 +254,21 @@ public class Map implements Evented {
     /** Zooms the map to the specified zoom level, with an animated transition. */
     public native Map zoomTo(double zoom, Object options, Object eventData);
 
+    /** Returns the map's geographical center-point. */
+    public native LngLat getCenter();
+
+    /** @see #setCenter(LngLat, Object) */
+    public native Map setCenter(double[] center);
+
+    /** @see #setCenter(LngLat, Object) */
+    public native Map setCenter(LngLat center);
+
+    /** @see #setCenter(LngLat, Object) */
+    public native Map setCenter(double[] center, @Nullable Object eventData);
+    
+    /** Sets the map's geographical center-point. Equivalent to {@code jumpTo({center: center})}. */
+    public native Map setCenter(LngLat center, @Nullable Object eventData);
+
     /** Pans the map to the specified location, with an animated transition. */
     public native Map panTo(double[] lngLat);
 
@@ -266,19 +281,143 @@ public class Map implements Evented {
     /** Pans the map to the specified location, with an animated transition. */
     public native Map panTo(LngLat lngLat, @Nullable AnimationOptions options, @Nullable Object eventData);
 
+    /** @see #cameraForBounds(LngLatBounds, CameraForBoundsOptions) */
+    public native @Nullable CameraOptions cameraForBounds(LngLatBounds bounds);
+
     /**
-     * Pans and zooms the map to contain its visible area within the specified geographical bounds. This function will
-     * also reset the map's bearing to 0 if bearing is nonzero.
+     * If map is able to fit to provided bounds, returns  CameraOptions with at least  center,  zoom,  bearing, offset,
+     * padding, and  maxZoom, as well as any other options provided in arguments. If map is unable to fit, method will
+     * warn and return undefined.
      */
-    public native Map fitBounds(double[] westSouthEastNorth, @Nullable FitBoundsOptions options,
-            @Nullable Object eventData);
+    public native @Nullable CameraOptions cameraForBounds(LngLatBounds bounds, CameraForBoundsOptions options);
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class CameraForBoundsOptions {
+
+        /** {@code (number | PaddingOptions)?} The amount of padding in pixels to add to the given bounds. */
+        public @Nullable Object padding;
+        public final @JsOverlay CameraForBoundsOptions padding(double padding) { this.padding = padding; return this; }
+        public final @JsOverlay CameraForBoundsOptions padding(
+                PaddingOptions padding) { this.padding = padding; return this; }
+
+        /**
+         * {@code PointLike(default [0,0])} The center of the given bounds relative to the map's center, measured in
+         * pixels.
+         */
+        public @Nullable Object offset;
+        public final @JsOverlay CameraForBoundsOptions offset(double[] offset) { this.offset = offset; return this; }
+        public final @JsOverlay CameraForBoundsOptions offset(Point offset) { this.offset = offset; return this; }
+
+        /**
+         * {@code maxZoom number?} The maximum zoom level to allow when the camera would transition to the specified
+         * bounds.
+         */
+        public @Nullable Double maxZoom;
+        public final @JsOverlay CameraForBoundsOptions maxZoom(double maxZoom) { this.maxZoom = maxZoom; return this; }
+
+        public static @JsOverlay
+        CameraForBoundsOptions cameraForBoundsOptions() { return new CameraForBoundsOptions(); }
+    }
+
+    /** @see #fitBounds(LngLatBounds, FitBoundsOptions, Object) */
+    public native Map fitBounds(double[] westSouthEastNorth, @Nullable FitBoundsOptions options, @Nullable Object eventData);
 
     /**
      * Pans and zooms the map to contain its visible area within the specified geographical bounds. This function will
      * also reset the map's bearing to 0 if bearing is nonzero.
      */
-    public native Map fitBounds(LngLatBounds westSouthEastNorth, @Nullable FitBoundsOptions options,
-            @Nullable Object eventData);
+    public native Map fitBounds(LngLatBounds westSouthEastNorth, @Nullable FitBoundsOptions options, @Nullable Object eventData);
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class FitBoundsOptions {
+
+        /** {@code (number | PaddingOptions)} The amount of padding in pixels to add to the given bounds. */
+        public Object padding;
+        public final @JsOverlay FitBoundsOptions padding(double padding) { this.padding = padding; return this; }
+        public final @JsOverlay FitBoundsOptions padding(PaddingOptions padding) { this.padding = padding; return this; }
+        public final @JsOverlay FitBoundsOptions padding(double top, double right, double bottom, double left) {
+            PaddingOptions out = new PaddingOptions();
+            out.top = top; out.right = right; out.bottom = bottom; out.left = left;
+            return padding(out);
+        }
+
+        /**
+         * If true, the map transitions using Map#easeTo. If false, the map transitions using Map#flyTo. See those
+         * functions and AnimationOptions for information about options available.
+         */
+        public @Nullable Boolean linear;
+        public final @JsOverlay FitBoundsOptions linear(boolean linear) { this.linear = linear; return this; }
+
+        /** {@code Function?} An easing function for the animated transition. See AnimationOptions. */
+        public @Nullable Object easing;
+        public final @JsOverlay FitBoundsOptions easing(Function easing) { this.easing = easing; return this; }
+
+        /** {@code PointLike(default [0,0])} The center of the given bounds relative to the map's center, measured in pixels. */
+        public @Nullable Object offset;
+        public final @JsOverlay FitBoundsOptions offset(double[] offset) { this.offset = offset; return this; }
+        public final @JsOverlay FitBoundsOptions offset(Point offset) { this.offset = offset; return this; }
+
+        /** {@code number?} The maximum zoom level to allow when the map view transitions to the specified bounds. */
+        public @Nullable Double maxZoom;
+        public final @JsOverlay FitBoundsOptions maxZoom(double maxZoom) { this.maxZoom = maxZoom; return this; }
+
+        public static @JsOverlay FitBoundsOptions fitBoundsOptions() { return new FitBoundsOptions(); }
+    }
+    
+    /** @see #fitScreenCoordinates(double[], double[], double, FitScreenCoordinatesOptions, Object) */
+    public native Map fitScreenCoordinates(double[] p0, double[] p1, double bearing);
+
+    /** @see #fitScreenCoordinates(double[], double[], double, FitScreenCoordinatesOptions, Object) */
+    public native Map fitScreenCoordinates(double[] p0, double[] p1, double bearing, @Nullable FitScreenCoordinatesOptions options);
+
+    /**
+     * fitScreenCoordinates(p0, p1, bearing, options, eventData)
+     * Pans, rotates and zooms the map to to fit the box made by points p0 and p1 once the map is rotated to the
+     * specified bearing. To zoom without rotating, pass in the current map bearing.
+     *
+     * @param p0 {@code (PointLike)} First point on screen, in pixel coordinates
+     * @param p1 {@code (PointLike)} Second point on screen, in pixel coordinates
+     * @param bearing {@code (number)} Desired map bearing at end of animation, in degrees
+     * @param options {@code (any)}
+     * @param eventData {@code (Object)} Additional properties to be added to event objects of events triggered by this method.
+     */
+    public native Map fitScreenCoordinates(double[] p0, double[] p1, double bearing, @Nullable FitScreenCoordinatesOptions options, @Nullable Object eventData);
+
+    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
+    public static class FitScreenCoordinatesOptions {
+
+        /** {@code (number | PaddingOptions)} The amount of padding in pixels to add to the given bounds. */
+        public Object padding;
+        public final @JsOverlay FitScreenCoordinatesOptions padding(double padding) { this.padding = padding; return this; }
+        public final @JsOverlay FitScreenCoordinatesOptions padding(PaddingOptions padding) { this.padding = padding; return this; }
+        public final @JsOverlay FitScreenCoordinatesOptions padding(double top, double right, double bottom, double left) {
+            PaddingOptions out = new PaddingOptions();
+            out.top = top; out.right = right; out.bottom = bottom; out.left = left;
+            return padding(out);
+        }
+
+        /**
+         * If true, the map transitions using Map#easeTo. If false, the map transitions using Map#flyTo. See those
+         * functions and AnimationOptions for information about options available.
+         */
+        public @Nullable Boolean linear;
+        public final @JsOverlay FitScreenCoordinatesOptions linear(boolean linear) { this.linear = linear; return this; }
+
+        /** {@code Function?} An easing function for the animated transition. See AnimationOptions. */
+        public @Nullable Object easing;
+        public final @JsOverlay FitScreenCoordinatesOptions easing(Function easing) { this.easing = easing; return this; }
+
+        /** {@code PointLike(default [0,0])} The center of the given bounds relative to the map's center, measured in pixels. */
+        public @Nullable Object offset;
+        public final @JsOverlay FitScreenCoordinatesOptions offset(double[] offset) { this.offset = offset; return this; }
+        public final @JsOverlay FitScreenCoordinatesOptions offset(Point offset) { this.offset = offset; return this; }
+
+        /** {@code number?} The maximum zoom level to allow when the map view transitions to the specified bounds. */
+        public @Nullable Double maxZoom;
+        public final @JsOverlay FitScreenCoordinatesOptions maxZoom(double maxZoom) { this.maxZoom = maxZoom; return this; }
+
+        public static @JsOverlay FitScreenCoordinatesOptions fitBoundsOptions() { return new FitScreenCoordinatesOptions(); }
+    }
 
     /**
      * Changes any combination of center, zoom, bearing, and pitch, without an animated transition. The map will retain
@@ -325,16 +464,39 @@ public class Map implements Evented {
     public native double getBearing();
     public native double setBearing(double bearing);
 
+    /** @see #rotateTo(double, AnimationOptions, Object) */
+    public native Map rotateTo(double bearing);
+
+    /** @see #rotateTo(double, AnimationOptions, Object) */
+    public native Map rotateTo(double bearing, @Nullable AnimationOptions options);
+
+    /**
+     * Rotates the map to the specified bearing, with an animated transition. The bearing is the compass direction that
+     * is "up"; for example, a bearing of 90° orients the map so that east is up.
+     */
+    public native Map rotateTo(double bearing, @Nullable AnimationOptions options, @Nullable Object eventData);
+
+    /** @see #resetNorth(AnimationOptions, Object) */
+    public native Map resetNorth();
+
+    /** @see #resetNorth(AnimationOptions, Object) */
+    public native Map resetNorth(@Nullable AnimationOptions options);
+
+    /** Rotates the map so that north is up (0° bearing), with an animated transition. */
+    public native Map resetNorth(@Nullable AnimationOptions options, @Nullable Object eventData);
+
+    /** @see #snapToNorth(AnimationOptions, Object) */
+    public native Map snapToNorth();
+
+    /** @see #snapToNorth(AnimationOptions, Object) */
+    public native Map snapToNorth(@Nullable AnimationOptions options);
+
+    /** Snaps the map so that north is up (0° bearing), if the current bearing is close enough to it (i.e. within the bearingSnap threshold). */
+    public native Map snapToNorth(@Nullable AnimationOptions options, @Nullable Object eventData);
+
     /** Returns the map's current pitch (tilt). */
     public native double getPitch();
     public native Map setPitch(double pitch);
-
-    /**
-     * If map is able to fit to provided bounds, returns  CameraOptions with at least  center,  zoom,  bearing, offset,
-     * padding, and  maxZoom, as well as any other options provided in arguments. If map is unable to fit, method will
-     * warn and return undefined.
-     */
-    public native @Nullable CameraOptions cameraForBounds(LngLatBounds bounds);
 
     /** Returns a Boolean indicating whether the map is fully loaded. */
     public native boolean loaded();
@@ -399,32 +561,6 @@ public class Map implements Evented {
     @FunctionalInterface @JsFunction
     public interface Listener {
         void apply(Event e);
-    }
-
-    @JsType(namespace = GLOBAL, name = "Object", isNative = true)
-    public static class FitBoundsOptions {
-        /** (number | PaddingOptions) The amount of padding in pixels to add to the given bounds. */
-        public Object padding;
-        public final @JsOverlay FitBoundsOptions padding(double padding) { this.padding = padding; return this; }
-        public final @JsOverlay FitBoundsOptions padding(double top, double right, double bottom, double left) {
-            PaddingOptions out = new PaddingOptions();
-            out.top = top; out.right = right; out.bottom = bottom; out.left = left;
-            padding = out;
-            return this;
-        }
-
-        /**
-         * If true, the map transitions using Map#easeTo. If false, the map transitions using Map#flyTo. See those
-         * functions and AnimationOptions for information about options available.
-         */
-        public boolean linear;
-        public final @JsOverlay FitBoundsOptions linear(boolean linear) { this.linear = linear; return this; }
-
-        /** The maximum zoom level to allow when the map view transitions to the specified bounds. */
-        public double maxZoom;
-        public final @JsOverlay FitBoundsOptions maxZoom(double maxZoom) { this.maxZoom = maxZoom; return this; }
-
-        public static @JsOverlay FitBoundsOptions fitBoundsOptions() { return new FitBoundsOptions(); }
     }
 
     @JsType(namespace = GLOBAL, name = "Object", isNative = true)
