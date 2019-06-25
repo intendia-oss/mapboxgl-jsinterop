@@ -508,6 +508,18 @@ public class Map implements Evented {
 
     public native Map stop();
 
+    /**
+     * Returns a {@code Point} representing pixel coordinates, relative to the map's container, that correspond to the
+     * specified geographical location.
+     */
+    public native Point project(LngLat lngLat);
+
+    /**
+     * Returns a {@code LngLat} representing geographical coordinates that correspond to the specified pixel
+     * coordinates.
+     */
+    public native LngLat unproject(Point point);
+
     @JsType(namespace = GLOBAL, name = "Object", isNative = true)
     public static class MapOptions {
         public Object container;
