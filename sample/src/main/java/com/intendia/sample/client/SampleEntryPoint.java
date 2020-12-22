@@ -19,6 +19,7 @@ import com.intendia.mapboxgl.map.Map.MapOptions;
 import com.intendia.mapboxgl.map.MapEventType;
 import com.intendia.mapboxgl.map.MapGlobal;
 import com.intendia.mapboxgl.map.NavigationControl;
+import com.intendia.mapboxgl.map.Popup;
 import com.intendia.mapboxgl.map.ScaleControl;
 import elemental2.dom.HTMLElement;
 import javax.annotation.Nullable;
@@ -85,6 +86,9 @@ public class SampleEntryPoint implements EntryPoint {
                 @Override public HTMLElement onAdd(Map map) { return el; }
                 @Override public void onRemove(Map map) { }
             });
+
+            Popup madrid = new Popup();
+            madrid.trackPointer().setHTML("<b>Madrid!</b>").setLngLat(new double[] { -3, 40 }).addTo(map);
 
             bindEvent(map, MapGlobal.load);
             // bindEvent(map, MapGlobal.dataloading); bindEvent(map, MapGlobal.data); //too many events!
