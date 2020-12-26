@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.intendia.mapboxgl-jsinterop</groupId>
     <artifactId>mapboxgl-jsinterop-parent</artifactId>
-    <version>HEAD-SNAPSHOT</version>
+    <version>0.1-beta4</version>
     <packaging>pom</packaging>
     <name>MapboxGL JsInterop</name>
     <description>Mapbox GL JsInterop Java API.</description>
@@ -27,7 +27,7 @@
         <connection>scm:git:https://github.com/intendia-oss/mapboxgl-jsinterop.git</connection>
         <developerConnection>scm:git:git@github.com:intendia-oss/mapboxgl-jsinterop.git</developerConnection>
         <url>https://github.com/intendia-oss/mapboxgl-jsinterop</url>
-        <tag>HEAD</tag>
+        <tag>v0.1-beta4</tag>
     </scm>
 
     <issueManagement>
