@@ -16,6 +16,15 @@ import jsinterop.annotations.JsType;
     public native Marker remove();
     public native Element getElement();
 
+    /** Returns the Popup instance that is bound to the Marker.*/
+    public native Popup getPopup();
+
+    /** Binds a Popup to the Marker.*/
+    public native Marker setPopup(Popup popup);
+
+    /** Opens or closes the Popup instance that is bound to the Marker, depending on the current state of the Popup.*/
+     public native Marker togglePopup();
+
     @JsType(namespace = GLOBAL, name = "Object", isNative = true) public static class MarkerOptions {
         public double[] offset;
         public final @JsOverlay MarkerOptions offset(int x, int y) {
