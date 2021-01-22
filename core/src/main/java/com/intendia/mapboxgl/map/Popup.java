@@ -21,8 +21,8 @@ public class Popup {
     public native Popup setLngLat(LngLat lngLat);
     public native Popup setLngLat(double[] lngLat);
 
-    public native int getMaxWidth();
-    public native Popup setMaxWidth(int maxWidth);
+    public native String getMaxWidth();
+    public native Popup setMaxWidth(String maxWidth);
 
     public native void addClassName(String className);
     public native void removeClassName(String className);
